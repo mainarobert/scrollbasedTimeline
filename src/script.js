@@ -35,15 +35,6 @@ window.addEventListener('resize', () =>
 })
 
 /**
- * Scroll
- */
-let scrollY = window.scrollY
-window.addEventListener('scroll', () => {
-    scrollY = window.scrollY
-    console.log(scrollY)
-})
-
-/**
  * Camera
  */
 // Base camera
@@ -54,8 +45,8 @@ camera.position.z = 4
 scene.add(camera)
 
 // Controls
-//const controls = new OrbitControls(camera, canvas)
-//controls.enableDamping = true
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = true
 
 /**
  * Cube
