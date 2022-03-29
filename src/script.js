@@ -35,27 +35,42 @@ window.addEventListener('resize', () =>
 })
 
 /**
+ * Scroll
+ */
+let scrollY = window.scrollY
+window.addEventListener('scroll', () => {
+    scrollY = window.scrollY
+    console.log(scrollY)
+})
+
+/**
  * Camera
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 1
-camera.position.y = 1
-camera.position.z = 1
+//camera.position.x = 0
+//camera.position.y = 0
+camera.position.z = 4
 scene.add(camera)
 
 // Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = true
+//const controls = new OrbitControls(camera, canvas)
+//controls.enableDamping = true
 
 /**
  * Cube
  */
 const cube = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+    new THREE.MeshNormalMaterial()
 )
 scene.add(cube)
+
+/**
+ * Lights
+ */
+const ambientLight = new THREE.AmbientLight()
+scene.add(ambientLight)
 
 /**
  * Renderer
@@ -71,16 +86,20 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  * Animate
  */
 const clock = new THREE.Clock()
-let lastElapsedTime = 0
+//let lastElapsedTime = 0
 
 const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
-    const deltaTime = elapsedTime - lastElapsedTime
-    lastElapsedTime = elapsedTime
+    //const deltaTime = elapsedTime - lastElapsedTime
+    //lastElapsedTime = elapsedTime
+
+    cube.rotation.x = elapsedTime * 0.9
+    cube.rotation.y = elapsedTime * 0.9
+    cube.rotation.z = elapsedTime * 0.9
 
     // Update controls
-    controls.update()
+    //controls.update()
 
     // Render
     renderer.render(scene, camera)
