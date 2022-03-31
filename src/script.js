@@ -1,6 +1,8 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 /**
  * Base
@@ -10,6 +12,7 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
+
 
 /**
  * Sizes
@@ -34,6 +37,7 @@ window.addEventListener('resize', () =>
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
+
 /**
  * Camera
  */
@@ -47,6 +51,9 @@ scene.add(camera)
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+controls.maxDistance = 4
+controls.minDistance = 1
+
 
 /**
  * Cube
@@ -57,11 +64,13 @@ const cube = new THREE.Mesh(
 )
 scene.add(cube)
 
+
 /**
  * Lights
  */
 const ambientLight = new THREE.AmbientLight()
 scene.add(ambientLight)
+
 
 /**
  * Renderer
@@ -72,6 +81,31 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+
+/**
+ * GSAP Animate
+ */
+gsap.registerPlugin(ScrollTrigger)
+
+const sections = document.querySelector('section')
+ScrollTrigger.defaults({
+    scrub: 1,
+})
+
+gsap.from(cube.position, {
+    y: 0,
+    ease: 'expo',
+})
+
+gsap.to(cube.position, {
+    x: 2.5,
+    scrollTrigger: {
+        trigger: sections[1]
+    }
+})
+
+
 
 /**
  * Animate
@@ -90,7 +124,7 @@ const tick = () =>
     cube.rotation.z = elapsedTime * 0.9
 
     // Update controls
-    //controls.update()
+    controls.update()
 
     // Render
     renderer.render(scene, camera)
