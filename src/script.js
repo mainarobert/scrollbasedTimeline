@@ -56,13 +56,13 @@ controls.minDistance = 1
 
 
 /**
- * Cube
+ * Sphere
  */
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshNormalMaterial()
+const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry( 1.5, 25, 16 ),
+    new THREE.MeshNormalMaterial( {wireframe: true} )
 )
-scene.add(cube)
+scene.add(sphere)
 
 
 /**
@@ -88,23 +88,17 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 gsap.registerPlugin(ScrollTrigger)
 
-const sections = document.querySelector('section')
-ScrollTrigger.defaults({
-    scrub: 1,
-})
-
-gsap.from(cube.position, {
-    y: 0,
-    ease: 'expo',
-})
-
-gsap.to(cube.position, {
-    x: 2.5,
-    scrollTrigger: {
-        trigger: sections[1]
+const tl = gsap.timeline({
+    scrollTrigger:{
+        scrub: 2,
+        ease: 'expo',
+        //markers: true,
+        start: 'top 0%'
     }
 })
 
+tl.to(sphere.position, {x: 3})
+tl.to(sphere.position,{x: 0, z: 2.3})
 
 
 /**
@@ -119,9 +113,9 @@ const tick = () =>
     //const deltaTime = elapsedTime - lastElapsedTime
     //lastElapsedTime = elapsedTime
 
-    cube.rotation.x = elapsedTime * 0.9
-    cube.rotation.y = elapsedTime * 0.9
-    cube.rotation.z = elapsedTime * 0.9
+    sphere.rotation.y = elapsedTime * 0.07
+    sphere.rotation.x = elapsedTime * 0.07
+    sphere.rotation.z = elapsedTime * 0.07
 
     // Update controls
     controls.update()
