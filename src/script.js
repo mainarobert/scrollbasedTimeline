@@ -3,6 +3,9 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
+
 
 /**
  * Base
@@ -53,6 +56,12 @@ const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
 controls.maxDistance = 4
 controls.minDistance = 1
+
+
+/**
+ * Earth model
+ */
+
 
 
 /**
